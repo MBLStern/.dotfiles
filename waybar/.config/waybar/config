@@ -1,0 +1,7 @@
+{
+  "layer": "bottom",
+  "position": "top",
+  "height": 3,
+  "spacing": 5,
+  "modules-right": ["battery","clock"]
+}

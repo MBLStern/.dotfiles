@@ -1,4 +1,4 @@
-#
+ #
 # ~/.bashrc
 #
 
@@ -14,6 +14,7 @@ alias ...='../../'
 alias ....='../../../'
 alias .....='../../../../'
 alias cp='cp -vi'
+alias unlock-datenknecht='ssh -i ~/.ssh/dropbear_key -p 2222 -o "HostKeyAlgorithms ssh-ed25519" root@192.168.178.54'
 alias mv='mv -vi'
 alias wget-uni='wget --user=q2046296 --ask-password'
 alias get-idf='. /opt/esp-idf/export.sh'
@@ -28,6 +29,8 @@ sudolast() {
         sudo "$@"
     fi
 }
-export PATH=/usr/local/texlive/2013/bin/x86_64-linux:$PATH
-export MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
-export INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH
+
+export GOPATH=$HOME/go/:$HOME/Projects/
+export DEVKITPRO="/opt/devkitpro"
+export DEVKITARM="/opt/devkitpro/devkitARM"
+export DEVKITPPC="/opt/devkitpro/devkitPPC"
