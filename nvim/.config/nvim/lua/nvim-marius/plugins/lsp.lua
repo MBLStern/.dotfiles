@@ -61,6 +61,7 @@ return {
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         local home = os.getenv('HOME')
         local pid = vim.fn.getpid()
+        local clang_root_markers = { "sdkconfig", ".clangd", ".git" }
 
         vim.lsp.config('lua_ls', {
             on_init = function(client)
@@ -118,10 +119,12 @@ return {
             vim.lsp.config("clangd", {
                 on_attach = on_attach,
                 capabilities = capabilities,
-                cmd = { home .. "/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd", '--background-index', '--clang-tidy', '--log=verbose' },
-                init_options = {
-                    fallbackFlags = { '-std=c++17' },
+                cmd = { home .. "/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd",
+                    "--compile-commands-dir=" .. vim.fs.root(0, clang_root_markers) .. "/build",
+                    "--background-index", "--clang-tidy", "--header-insertion=never", "--completion-style=detailed",
+                    "--function-arg-placeholders", "--fallback-style=llvm",
                 },
+                root_markers = clang_root_markers,
             })
         else
             vim.lsp.config("clangd", {
@@ -131,6 +134,7 @@ return {
                 init_options = {
                     fallbackFlags = { '-std=c++17' },
                 },
+                root_markers = clang_root_markers,
             })
         end
 
