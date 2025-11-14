@@ -123,6 +123,9 @@ return {
                     "--compile-commands-dir=" .. vim.fs.root(0, clang_root_markers) .. "/build",
                     "--background-index", "--clang-tidy", "--header-insertion=never", "--completion-style=detailed",
                     "--function-arg-placeholders", "--fallback-style=llvm",
+                    "--query-driver=" ..
+                    home ..
+                    "/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc"
                 },
                 root_markers = clang_root_markers,
             })
