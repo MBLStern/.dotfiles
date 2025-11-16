@@ -20,9 +20,10 @@ return {
         vim.keymap.set({ "i", "s" }, "<C-l>", function() ls.jump(1) end, { silent = true })
         vim.keymap.set({ "i", "s" }, "<M-l>", function() ls.jump(-1) end, { silent = true })
 
-
         -- cmp setup
         local cmp = require("cmp")
+
+        vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
         cmp.setup({
             snippet = {
@@ -32,8 +33,22 @@ return {
                 end,
             },
             window = {
-                -- completion = cmp.config.window.bordered(),
-                -- documentation = cmp.config.window.bordered(),
+                --completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+            },
+            formatting = {
+                fields = { 'menu', 'abbr', 'kind' },
+                format = function(entry, item)
+                    local menu_icon = {
+                        nvim_lsp = 'λ',
+                        luasnip = '⋗',
+                        buffer = 'Ω',
+                        path = '🖫',
+                    }
+
+                    item.menu = menu_icon[entry.source.name]
+                    return item
+                end,
             },
             mapping = cmp.mapping.preset.insert({
                 ['<C-r>'] = cmp.mapping.select_next_item(),
