@@ -20,11 +20,11 @@ return {
         vim.keymap.set({ "i", "s" }, "<C-l>", function() ls.jump(1) end, { silent = true })
         vim.keymap.set({ "i", "s" }, "<M-l>", function() ls.jump(-1) end, { silent = true })
 
+
         -- cmp setup
         local cmp = require("cmp")
 
         vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-
         cmp.setup({
             snippet = {
                 -- REQUIRED - you must specify a snippet engine
@@ -33,7 +33,7 @@ return {
                 end,
             },
             window = {
-                --completion = cmp.config.window.bordered(),
+                -- completion = cmp.config.window.bordered(),
                 documentation = cmp.config.window.bordered(),
             },
             formatting = {
@@ -77,6 +77,24 @@ return {
         local home = os.getenv('HOME')
         local pid = vim.fn.getpid()
         local clang_root_markers = { "sdkconfig", ".clangd", ".git" }
+
+        local esp_target = function()
+            -- default to esp32 as target
+            local target    = "esp32"
+            local file_name = vim.fs.root(0, clang_root_markers) .. "/sdkconfig"
+            local file      = io.open(file_name, "r")
+            if not file then
+                return target
+            end
+            for line in io.lines(file_name) do
+                if string.find(line, "CONFIG_IDF_TARGET=") then
+                    target = string.sub(line, string.len('CONFIG_IDF_TARGET="') + 1, -2)
+                    break
+                end
+            end
+            io.close(file)
+            return target
+        end
 
         vim.lsp.config('lua_ls', {
             on_init = function(client)
@@ -140,7 +158,8 @@ return {
                     "--function-arg-placeholders", "--fallback-style=llvm",
                     "--query-driver=" ..
                     home ..
-                    "/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc"
+                    "/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-" ..
+                    esp_target() .. "-elf-gcc"
                 },
                 root_markers = clang_root_markers,
             })
