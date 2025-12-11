@@ -31,8 +31,8 @@ config.colors = {
     cursor_bg = 'lightgray'
 }
 
+
 config.window_background_opacity = background_opacity
-config.enable_wayland = true
 
 -- toggle function
 wezterm.on("toggle-opacity", function(window, pane)
