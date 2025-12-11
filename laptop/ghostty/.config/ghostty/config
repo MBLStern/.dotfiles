@@ -36,3 +36,4 @@ font-family = "JetBrains Mono"
 font-feature = -calt, -liga, -dlig
 window-inherit-font-size = false
 font-size = 10
+keybind = clear

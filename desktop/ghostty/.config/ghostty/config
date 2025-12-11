@@ -37,3 +37,4 @@ font-feature = -calt, -liga, -dlig
 window-inherit-font-size = false
 font-size = 12
 fullscreen = true
+keybind = clear
