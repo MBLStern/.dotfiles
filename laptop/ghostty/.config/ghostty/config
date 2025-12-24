@@ -37,3 +37,6 @@ font-feature = -calt, -liga, -dlig
 window-inherit-font-size = false
 font-size = 10
 keybind = clear
+clipboard-paste-protection = false
+keybind = performable:ctrl+shift+c=copy_to_clipboard
+keybind = performable:ctrl+shift+v=paste_from_clipboard
