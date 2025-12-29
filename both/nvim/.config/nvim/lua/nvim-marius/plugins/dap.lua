@@ -26,11 +26,43 @@ return {
         end
         -- debug adabter configurations
 
-        dap.adapters.gdb = {
-            type = "executable",
-            command = "gdb",
-            args = { "-i", "dap" }
-        }
+        local esp_gdb = function()
+            -- default to esp32 as target
+            local target    = "esp32"
+            local gdb       = "xtensa-esp-elf-gdb"
+            local file_name = vim.fs.root(0, { "sdkconfig", ".clangd", ".git" }) .. "/sdkconfig"
+            local file      = io.open(file_name, "r")
+            if not file then
+                return target
+            end
+            for line in io.lines(file_name) do
+                if string.find(line, "CONFIG_IDF_TARGET=") then
+                    target = string.sub(line, string.len('CONFIG_IDF_TARGET="') + 1, -2)
+                    break
+                end
+            end
+            io.close(file)
+            if target == "esp32" then
+                gdb = "xtensa-esp-elf-gdb"
+            elseif target == "esp32c3" then
+                gdb = "riscv32-esp-elf-gdb"
+            end
+            return gdb
+        end
+
+        if string.find(os.getenv("PATH") or "none", "esp%-idf") ~= nil then
+            dap.adapters.gdb = {
+                type = "executable",
+                command = esp_gdb(),
+                args = { "-i", "dap", '-q', '-x', 'build/gdbinit/symbols', '-x', 'build/gdbinit/prefix_map', '-x', 'build/gdbinit/connect' }
+            }
+        else
+            dap.adapters.gdb = {
+                type = "executable",
+                command = "gdb",
+                args = { "-i", "dap" }
+            }
+        end
 
         dap.adapters.coreclr = {
             type = 'executable',
