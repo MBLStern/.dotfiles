@@ -1,2 +1,5 @@
 mode=drun
-location=center
+normal_window=true
+height=240px
+width=500px
+insensitive=true

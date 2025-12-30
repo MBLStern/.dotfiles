@@ -6,10 +6,10 @@
 }
 #entry:selected {
     background: linear-gradient(120deg, #5577AA, #25344A);
-    border-radius: 5px;
+    border-radius: 0px;
 }
 #input {
     background-color: #25344A;
-    border-radius: 5px;
+    border-radius: 0px;
     color: #B1C0D8
 }
