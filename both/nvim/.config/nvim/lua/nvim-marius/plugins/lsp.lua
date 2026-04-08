@@ -57,7 +57,6 @@ return {
         })
 
         -- lsp setup
-
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         local home = os.getenv('HOME')
         local pid = vim.fn.getpid()
@@ -78,6 +77,11 @@ return {
                 end
             end
             io.close(file)
+            if target == "esp32" then
+                return "/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc"
+            elseif target == "esp32c3" then
+                return "/.espressif/tools/riscv32-esp-elf/esp-15.2.0_20251204/riscv32-esp-elf/bin/riscv32-esp-elf-gcc"
+            end
             return target
         end
 
@@ -137,14 +141,11 @@ return {
             vim.lsp.config("clangd", {
                 on_attach = on_attach,
                 capabilities = capabilities,
-                cmd = { home .. "/.espressif/tools/esp-clang/esp-19.1.2_20250312/esp-clang/bin/clangd",
+                cmd = { home .. "/.espressif/tools/esp-clang/esp-20.1.1_20250829/esp-clang/bin/clangd",
                     "--compile-commands-dir=" .. vim.fs.root(0, clang_root_markers) .. "/build",
                     "--background-index", "--clang-tidy", "--header-insertion=never", "--completion-style=detailed",
                     "--function-arg-placeholders", "--fallback-style=llvm",
-                    "--query-driver=" ..
-                    home ..
-                    "/.espressif/tools/xtensa-esp-elf/esp-14.2.0_20241119/xtensa-esp-elf/bin/xtensa-" ..
-                    esp_target() .. "-elf-gcc"
+                    "--query-driver=" .. home .. esp_target()
                 },
                 root_markers = clang_root_markers,
             })

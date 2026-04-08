@@ -29,7 +29,7 @@ return {
         local esp_gdb = function()
             -- default to esp32 as target
             local target    = "esp32"
-            local gdb       = "xtensa-esp-elf-gdb"
+            local gdb       = "xtensa-esp32-elf-gdb"
             local file_name = vim.fs.root(0, { "sdkconfig", ".clangd", ".git" }) .. "/sdkconfig"
             local file      = io.open(file_name, "r")
             if not file then
@@ -43,9 +43,11 @@ return {
             end
             io.close(file)
             if target == "esp32" then
-                gdb = "xtensa-esp-elf-gdb"
+                gdb = home ..
+                    "/.espressif/tools/xtensa-esp-elf-gdb/16.3_20250913/xtensa-esp-elf-gdb/bin/xtensa-esp32-elf-gdb"
             elseif target == "esp32c3" then
-                gdb = "riscv32-esp-elf-gdb"
+                gdb = home ..
+                    "/.espressif/tools/riscv32-esp-elf-gdb/16.3_20250913/riscv32-esp-elf-gdb/bin/riscv32-esp-elf-gdb"
             end
             return gdb
         end
@@ -54,7 +56,7 @@ return {
             dap.adapters.gdb = {
                 type = "executable",
                 command = esp_gdb(),
-                args = { "-i", "dap", '-q', '-x', 'build/gdbinit/symbols', '-x', 'build/gdbinit/prefix_map', '-x', 'build/gdbinit/connect' }
+                args = { '-i', 'dap', '-q', '-x', 'build/gdbinit/symbols', '-x', 'build/gdbinit/prefix_map', '-x', 'build/gdbinit/connect' }
             }
         else
             dap.adapters.gdb = {
