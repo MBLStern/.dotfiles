@@ -118,8 +118,8 @@ return {
                         globals = { 'vim' }
                     },
                 },
-            }
-
+            },
+            capabilities = capabilities,
         })
 
         vim.lsp.config("vhdl_ls", {
@@ -171,6 +171,20 @@ return {
             organize_imports_on_format = true,
             enable_decompilation_support = true,
             filetypes = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'targets', 'tproj', 'slngen', 'fproj' }
+        })
+
+        vim.lsp.config('pylsp', {
+            settings = {
+                pylsp = {
+                    plugins = {
+                        pycodestyle = {
+                            ignore = { 'W291', 'W391', 'E115', 'E203', 'E302', 'E402', 'E721' },
+                            maxLineLength = 200
+                        }
+                    }
+                }
+            },
+            capabilities = capabilities,
         })
 
         require('mason').setup({})
