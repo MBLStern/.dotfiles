@@ -2,6 +2,7 @@ return {
     'mfussenegger/nvim-dap',
     dependencies = { "rcarriga/nvim-dap-ui",
         "leoluz/nvim-dap-go",
+        "mfussenegger/nvim-dap-python",
         "nvim-neotest/nvim-nio" },
     config = function()
         local home = os.getenv('HOME')
@@ -100,6 +101,8 @@ return {
         }
 
         dap.configurations.rust = dap.configurations.cpp
+
+        require("dap-python").setup("python3")
 
         require('dap-go').setup()
         -- Keymaps
