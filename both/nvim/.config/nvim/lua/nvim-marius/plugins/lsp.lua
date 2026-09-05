@@ -141,7 +141,7 @@ return {
             vim.lsp.config("clangd", {
                 on_attach = on_attach,
                 capabilities = capabilities,
-                cmd = { home .. "/.espressif/tools/esp-clang/esp-21.1.3_20260408/esp-clang/bin/clangd",
+                cmd = { home .. "/.espressif/tools/esp-clangd/esp-21.1.3_20260408/esp-clangd/bin/clangd",
                     "--compile-commands-dir=" .. vim.fs.root(0, clang_root_markers) .. "/build",
                     "--background-index", "--clang-tidy", "--header-insertion=never", "--completion-style=detailed",
                     "--function-arg-placeholders", "--fallback-style=llvm",
