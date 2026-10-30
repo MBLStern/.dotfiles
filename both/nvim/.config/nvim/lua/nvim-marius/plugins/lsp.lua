@@ -154,9 +154,7 @@ return {
                 on_attach = on_attach,
                 capabilities = capabilities,
                 cmd = { 'clangd', '--background-index', '--clang-tidy', '--log=verbose' },
-                init_options = {
-                    fallbackFlags = { '-std=c++17' },
-                },
+                init_options = {},
                 root_markers = clang_root_markers,
             })
         end
