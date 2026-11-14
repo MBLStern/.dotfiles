@@ -284,6 +284,3 @@ hl.window_rule({
 
     no_focus = true,
 })
-
---windowrule = match:class wofi, move monitor_w*0.5-window_w/2 monitor_h*0.16
---windowrule = match:class wofi, stay_focused on
